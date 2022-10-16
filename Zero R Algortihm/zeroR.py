@@ -11,11 +11,6 @@ class zeroR:
         self.model          = {}
 
 
-    def setattClass(self,indexClass):
-        self.attNames=indexClass
-        return
-
-
     def loadData(self,nameDataset):
         with open(nameDataset, newline='') as csvfile:
             reader = csv.DictReader(csvfile)
@@ -42,9 +37,9 @@ class zeroR:
 
 
 if __name__ == '__main__':
+    name_csv = str(input("Dame el nombre del archivo csv: "))
     zz= zeroR()
-    zz.setattClass(4)
-    zz.loadData('iris.csv')
+    zz.loadData(name_csv)
     zz.setClasses()
     zz.generateModel()
     print(zz.dictClasses)
