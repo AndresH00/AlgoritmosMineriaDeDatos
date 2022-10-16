@@ -1,6 +1,6 @@
 import csv
 
-class zeroR:
+class ZeroR:
     def __init__(self):
         self.datasetName    = ""
         self.dataset        = []
@@ -36,13 +36,12 @@ class zeroR:
 
 
 
-if __name__ == '__main__':
-    name_csv = str(input("Dame el nombre del archivo csv: "))
-    zz= zeroR()
-    zz.loadData(name_csv)
-    zz.setClasses()
-    zz.generateModel()
-    print(zz.dictClasses)
+    def ejecutarZeroR(name_csv):
+        zz= ZeroR()
+        zz.loadData(name_csv)
+        zz.setClasses()
+        zz.generateModel()
+        print(zz.dictClasses)
 
 
 

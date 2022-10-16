@@ -16,9 +16,9 @@ def load_csv(filename):
 	return dataset
  
 # Convert string column to float
-def str_column_to_float(dataset, column):
-    for row in dataset:
-        row[column] = float(row[column].strip())
+# def str_column_to_float(dataset, column):
+#     for row in dataset:
+#         row[column] = float(row[column].strip())
  
 # Convert string column to integer
 def str_column_to_int(dataset, column):
@@ -94,28 +94,46 @@ def predict(summaries, row):
 	return best_label
  
 # Make a prediction with Naive Bayes on Iris Dataset
-def ejecutarNaives():
-    filename = str(input("Dame el nombre del archivo csv para entrenar: "))
-    nameAtt = str(input('Tiene el nombre de los atributos en la primera linea (si, no): '))
-    dataset = load_csv(filename)
-    if nameAtt.lower() == "si":
-        nameAtt = dataset[0]
-        dataset.pop(0)
-    for i in range(len(dataset[0])-1):
-        str_column_to_float(dataset, i)
+def ejecutarNaives(dataTrain, dataTest):
+    # filename = str(input("Dame el nombre del archivo csv para entrenar: "))
+    # nameAtt = str(input('Tiene el nombre de los atributos en la primera linea (si, no): '))
+    # dataset = load_csv(filename)
+    count_row = dataTrain.shape[0]  # Gives number of rows
+    count_col = dataTrain.shape[1]  # Gives number of columns
+    dataset = []
+    for x in range(count_row):
+        lista_row = []
+        for y in range(count_col):
+            lista_row.append(dataTrain.iloc[x][y])
+        dataset.append(lista_row)
+    print(dataset)
+    # if nameAtt.lower() == "si":
+    #     nameAtt = dataset[0]
+    #     dataset.pop(0)
+    # for i in range(len(dataset[0])-1):
+    #     str_column_to_float(dataset, i)
     # convert class column to integers
     str_column_to_int(dataset, len(dataset[0])-1)
     # fit model
     model = summarize_by_class(dataset)
     # define a new record
-    filename = str(input("Dame el nombre del archivo csv para practicar: "))
-    nameAtt = str(input('Tiene el nombre de los atributos en la primera linea (si, no): '))
-    dataset = load_csv(filename)
-    if nameAtt.lower() == "si":
-        nameAtt = dataset[0]
-        dataset.pop(0)
-    for i in range(len(dataset[0])-1):
-        str_column_to_float(dataset, i)
+    # filename = str(input("Dame el nombre del archivo csv para practicar: "))
+    # nameAtt = str(input('Tiene el nombre de los atributos en la primera linea (si, no): '))
+    # dataset = load_csv(filename)
+
+    # if nameAtt.lower() == "si":
+    #     nameAtt = dataset[0]
+    #     dataset.pop(0)
+    count_row = dataTest.shape[0]  # Gives number of rows
+    count_col = dataTest.shape[1]  # Gives number of columns
+    dataset = []
+    for x in range(count_row):
+        lista_row = []
+        for y in range(count_col):
+            lista_row.append(dataTest.iloc[x][y])
+        dataset.append(lista_row)
+    # for i in range(len(dataset[0])-1):
+    #     str_column_to_float(dataset, i)
     str_column_to_int(dataset, len(dataset[0])-1)
     total = 0
     errores = 0
@@ -131,3 +149,4 @@ def ejecutarNaives():
             errores +=1
         print('Data=%s, Predicted: %s Expected: %s' % (linea, label, resultadoEsperado))
     print('Total datos de prueba: {} | Errores: {} | Porcentaje de error: {}% | Porcentaje de acierto: {}%'.format(total,errores,round((errores/total*100),2),round((100-(errores/total*100)),2)))
+
