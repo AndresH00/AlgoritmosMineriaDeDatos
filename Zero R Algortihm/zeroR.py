@@ -18,7 +18,7 @@ class ZeroR:
             self.attNames = reader.fieldnames
         return
 
-    def setClasses(self):  # quantas classes possui?
+    def setClasses(self):  
         for linha in self.dataset:
             self.allClasses.append(linha[self.attNames[self.attClass]])
 
