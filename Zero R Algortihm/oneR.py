@@ -32,14 +32,15 @@ class OneR(object):
                 self.max_accuracy = accuracy
                 self.ideal_variable = i
 
-            result_feature = {"variable": str(i), "accuracy":accuracy, "rules": result[str(i)] }  
+            result_feature = {"variable": str(i), "exactitud":accuracy, "regla": result[str(i)] }  
             response.append(result_feature)
             
         return response
 
     
     def predict(self, X=None):
-        self_ideal_variable = self.ideal_variable + 1
+        #cambiar si se necesita
+        self.ideal_variable = self.ideal_variable + 1
         
     def __repr__(self):
         if self.ideal_variable != None:

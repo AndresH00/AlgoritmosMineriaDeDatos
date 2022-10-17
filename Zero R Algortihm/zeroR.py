@@ -10,14 +10,14 @@ class ZeroR:
         self.dictClasses    = {}
         self.model          = {}
 
-
+    #Abre el csv
     def loadData(self,nameDataset):
         with open(nameDataset, newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             self.dataset = list(reader)
             self.attNames = reader.fieldnames
         return
-
+    #Set de clases
     def setClasses(self):  
         for linha in self.dataset:
             self.allClasses.append(linha[self.attNames[self.attClass]])
@@ -28,14 +28,15 @@ class ZeroR:
             else:
                 self.dictClasses[linha[self.attNames[self.attClass]]] += 1
         return
-
+    
+    #Se genera el modelo
     def generateModel(self):
-        # Using the most frequent class to generate a model
+        # Usando la clase mas frecuente para generar el modelo
         maxi = max(self.dictClasses, key=self.dictClasses.get)
-        print("Model: \n ",self.attNames[self.attClass],"=>",maxi)
+        print("Modelo: \n ",self.attNames[self.attClass],"=>",maxi)
 
 
-
+    #funcion de ejecucion
     def ejecutarZeroR(name_csv):
         zz= ZeroR()
         zz.loadData(name_csv)

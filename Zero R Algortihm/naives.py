@@ -1,10 +1,9 @@
-# Make Predictions with Naive Bayes On The Iris Dataset
 from csv import reader
 from math import sqrt
 from math import exp
 from math import pi
  
-# Load a CSV file
+# Carga de csv
 def load_csv(filename):
 	dataset = list()
 	with open(filename, 'r') as file:
@@ -15,12 +14,12 @@ def load_csv(filename):
 			dataset.append(row)
 	return dataset
  
-# Convert string column to float
+# Convertir columnas a string que no sirvio
 # def str_column_to_float(dataset, column):
 #     for row in dataset:
 #         row[column] = float(row[column].strip())
  
-# Convert string column to integer
+# Conversor de string a int
 def str_column_to_int(dataset, column):
 	class_values = [row[column] for row in dataset]
 	unique = set(class_values)
@@ -32,7 +31,7 @@ def str_column_to_int(dataset, column):
 		row[column] = lookup[row[column]]
 	return lookup
  
-# Split the dataset by class values, returns a dictionary
+# Separar el dataset por clase y valores, regresa un diccionario
 def separate_by_class(dataset):
 	separated = dict()
 	for i in range(len(dataset)):
@@ -43,23 +42,23 @@ def separate_by_class(dataset):
 		separated[class_value].append(vector)
 	return separated
  
-# Calculate the mean of a list of numbers
+# Calcular el promedio de una lista de numeros
 def mean(numbers):
 	return sum(numbers)/float(len(numbers))
  
-# Calculate the standard deviation of a list of numbers
+# calcular la desviacion estandar de una lista de numeros
 def stdev(numbers):
 	avg = mean(numbers)
 	variance = sum([(x-avg)**2 for x in numbers]) / float(len(numbers)-1)
 	return sqrt(variance)
  
-# Calculate the mean, stdev and count for each column in a dataset
+# Calcula el promedio , desviacion estandar por cada columna en el dataset
 def summarize_dataset(dataset):
 	summaries = [(mean(column), stdev(column), len(column)) for column in zip(*dataset)]
 	del(summaries[-1])
 	return summaries
  
-# Split dataset by class then calculate statistics for each row
+# Divide el dataset por clase y calcula las estadisticas por cada fila
 def summarize_by_class(dataset):
 	separated = separate_by_class(dataset)
 	summaries = dict()
@@ -67,12 +66,12 @@ def summarize_by_class(dataset):
 		summaries[class_value] = summarize_dataset(rows)
 	return summaries
  
-# Calculate the Gaussian probability distribution function for x
+# Calcula la funcion de la probabilidad de distribucion gaussiana para x
 def calculate_probability(x, mean, stdev):
 	exponent = exp(-((x-mean)**2 / (2 * stdev**2 )))
 	return (1 / (sqrt(2 * pi) * stdev)) * exponent
- 
-# Calculate the probabilities of predicting each class for a given row
+
+# Calcula las probabilidadees de predecir cada clase por una fila seleccionada 
 def calculate_class_probabilities(summaries, row):
 	total_rows = sum([summaries[label][0][2] for label in summaries])
 	probabilities = dict()
@@ -82,8 +81,8 @@ def calculate_class_probabilities(summaries, row):
 			mean, stdev, _ = class_summaries[i]
 			probabilities[class_value] *= calculate_probability(row[i], mean, stdev)
 	return probabilities
- 
-# Predict the class for a given row
+
+# Predice la clase de una fila en especifico 
 def predict(summaries, row):
 	probabilities = calculate_class_probabilities(summaries, row)
 	best_label, best_prob = None, -1
@@ -93,7 +92,8 @@ def predict(summaries, row):
 			best_label = class_value
 	return best_label
  
-# Make a prediction with Naive Bayes on Iris Dataset
+
+# Funcion para predecir con Naive Bayes en el dataset de Iris
 def ejecutarNaives(dataTrain, dataTest):
     # filename = str(input("Dame el nombre del archivo csv para entrenar: "))
     # nameAtt = str(input('Tiene el nombre de los atributos en la primera linea (si, no): '))
